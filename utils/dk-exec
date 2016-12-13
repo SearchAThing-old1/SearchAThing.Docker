@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ "x$1" == "x" ]; then echo specify container; exit 0; fi
+
+docker exec -ti $1 /bin/bash

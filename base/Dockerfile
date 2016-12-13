@@ -14,6 +14,7 @@ RUN apt-get install -y nano less vim
 RUN apt-get install -y inetutils-ping dnsutils net-tools telnet curl
 RUN apt-get install -y man-db manpages
 RUN apt-get install -y bash-completion
+RUN apt-get install -y locate ; updatedb
 
 RUN apt-get install -y uuid
 RUN apt-get install -y psmisc

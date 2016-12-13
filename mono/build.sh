@@ -6,4 +6,4 @@ exdir=`executing_dir`
 container=`cat $exdir/imgdata/container`
 
 #--[ build image ]
-docker build -t searchathing/$container "$exdir"
+docker build $@ -t searchathing/$container "$exdir"

@@ -28,7 +28,7 @@ ENV DKHOST=mono
 
 #--[ entrypoint & cmd ]
 
-COPY imgdata/entrypoint.sh /
+COPY imgdata/entrypoint.sh /entrypoint.d/20-entrypoint-mono.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 

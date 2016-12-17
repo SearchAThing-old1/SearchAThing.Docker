@@ -1,12 +1,8 @@
 #!/bin/bash
 
-if [ ! -e /root/.entrypoint-executed ]; then
-
-	touch /root/.entrypoint-executed
+# one time only actions
+if [ ! -e /var/lib/docker-entrypoint/.entrypoint-mono-executed ]; then
+	touch /var/lib/docker-entrypoint/.entrypoint-mono-executed
 fi
 
-service ssh start
-service supervisor start
-service rsyslog start
-
-$1
+# every run actions

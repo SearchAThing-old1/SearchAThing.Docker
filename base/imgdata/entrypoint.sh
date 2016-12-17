@@ -1,12 +1,7 @@
 #!/bin/bash
 
-if [ ! -e /root/.entrypoint-executed ]; then
-
-	touch /root/.entrypoint-executed
-fi
-
-service ssh start
-service supervisor start
-service rsyslog start
+for i in `ls /entrypoint.d`; do
+	/entrypoint.d/"$i"
+done
 
 $1

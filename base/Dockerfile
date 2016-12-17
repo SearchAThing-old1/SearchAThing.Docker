@@ -31,8 +31,6 @@ RUN \
 # bashrc
 #====================================================================
 
-COPY imgdata/container /root/.container
-
 ENV DKHOST=base
 
 RUN \
@@ -51,7 +49,10 @@ ENV HISTSIZE=100000
 
 #--[ entrypoint & cmd ]
 
+RUN mkdir /entrypoint.d /var/lib/docker-entrypoint
+
 COPY imgdata/entrypoint.sh /
+COPY imgdata/entrypoint-base.sh /entrypoint.d/10-base.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 

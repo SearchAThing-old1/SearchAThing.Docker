@@ -1,9 +1,6 @@
 FROM searchathing/base
 
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
-
-#=======================================================================
+ENV DKHOST=mono
 
 #--[ mono-complete ]
 RUN \
@@ -23,8 +20,6 @@ RUN \
 	\rm -f /tmp/patch
 
 #======================================================================
-
-ENV DKHOST=mono
 
 #--[ entrypoint & cmd ]
 

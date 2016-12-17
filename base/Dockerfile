@@ -1,12 +1,18 @@
 FROM ubuntu:xenial
 
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
+ENV DKHOST=base HISTSIZE=100000 HOME=/root DEBIAN_FRONTEND=noninteractive
 
-#--[ apt transport https ]
+#--[ apt transport https locales ]
 RUN \
 	apt-get update && \
 	apt-get install -y apt-transport-https apt-utils && \
+	locale-gen en_US.UTF-8 && \
+	dpkg-reconfigure locales
+
+ENV LANGUAGE=en_US:en LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+RUN \
+	locale-gen en_US.UTF-8 && dpkg-reconfigure locales && \
 #--[ basic utils ]
 	apt-get update && \
 	apt-get install -y mc && \
@@ -31,8 +37,6 @@ RUN \
 # bashrc
 #====================================================================
 
-ENV DKHOST=base
-
 RUN \
 	echo 'if [ -f /etc/bash_completion ] && ! shopt -oq posix; then' >> /tmp/bash.bashrc && \
 	echo '    . /etc/bash_completion' >> /tmp/bash.bashrc && \
@@ -44,8 +48,6 @@ RUN \
 	echo 'export PATH=/nas/scripts/utils:$PATH' >> /tmp/bash.bashrc && \
 	cat /tmp/bash.bashrc >> /etc/bash.bashrc && \
 	cat /tmp/bash.bashrc >> /root/.bashrc
-
-ENV HISTSIZE=100000
 
 #--[ entrypoint & cmd ]
 

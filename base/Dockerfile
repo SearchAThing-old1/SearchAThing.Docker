@@ -4,32 +4,28 @@ ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
 
 #--[ apt transport https ]
-RUN apt-get update
-RUN apt-get install -y apt-transport-https apt-utils
-
+RUN \
+	apt-get update && \
+	apt-get install -y apt-transport-https apt-utils && \
 #--[ basic utils ]
-RUN apt-get update
-RUN apt-get install -y mc
-RUN apt-get install -y nano less vim
-RUN apt-get install -y inetutils-ping dnsutils net-tools telnet curl
-RUN apt-get install -y man-db manpages
-RUN apt-get install -y bash-completion
-RUN apt-get install -y locate ; updatedb
-
-RUN apt-get install -y uuid
-RUN apt-get install -y psmisc
-RUN apt-get install -y sudo
-
-RUN apt-get install -y net-tools telnet curl cifs-utils
-RUN apt-get install -y git libtool
-RUN apt-get install -y zip
-RUN apt-get install -y dos2unix
-
+	apt-get update && \
+	apt-get install -y mc && \
+	apt-get install -y nano less vim && \
+	apt-get install -y inetutils-ping dnsutils net-tools telnet curl && \
+	apt-get install -y man-db manpages && \
+	apt-get install -y bash-completion && \
+	apt-get install -y locate ; updatedb && \
+	apt-get install -y uuid && \
+	apt-get install -y psmisc && \
+	apt-get install -y sudo && \
+	apt-get install -y net-tools telnet curl cifs-utils && \
+	apt-get install -y git libtool && \
+	apt-get install -y zip && \
+	apt-get install -y dos2unix && \
 #--[ rsyslog ]
-RUN apt-get install -y rsyslog
-
+	apt-get install -y rsyslog && \
 #--[ supervisor ]
-RUN apt-get install -y supervisor
+	apt-get install -y supervisor
 
 #====================================================================
 # bashrc
@@ -37,17 +33,19 @@ RUN apt-get install -y supervisor
 
 COPY imgdata/container /root/.container
 
-RUN echo 'if [ -f /etc/bash_completion ] && ! shopt -oq posix; then' >> /tmp/bash.bashrc
-RUN echo '    . /etc/bash_completion' >> /tmp/bash.bashrc
-RUN echo 'fi' >> /tmp/bash.bashrc
-RUN echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h[`cat /root/.container`]:\w# "' >> /tmp/bash.bashrc
-RUN echo "alias mv='mv -i'" >> /tmp/bash.bashrc
-RUN echo "alias rm='rm -i'" >> /tmp/bash.bashrc
-RUN echo "alias cp='cp -i'" >> /tmp/bash.bashrc
-RUN echo 'export PATH=/nas/scripts/utils:$PATH' >> /tmp/bash.bashrc
+ENV DKHOST=base
 
-RUN cat /tmp/bash.bashrc >> /etc/bash.bashrc
-RUN cat /tmp/bash.bashrc >> /root/.bashrc
+RUN \
+	echo 'if [ -f /etc/bash_completion ] && ! shopt -oq posix; then' >> /tmp/bash.bashrc && \
+	echo '    . /etc/bash_completion' >> /tmp/bash.bashrc && \
+	echo 'fi' >> /tmp/bash.bashrc && \
+	echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h[$DKHOST]:\w# "' >> /tmp/bash.bashrc && \
+	echo "alias mv='mv -i'" >> /tmp/bash.bashrc && \
+	echo "alias rm='rm -i'" >> /tmp/bash.bashrc && \
+	echo "alias cp='cp -i'" >> /tmp/bash.bashrc && \
+	echo 'export PATH=/nas/scripts/utils:$PATH' >> /tmp/bash.bashrc && \
+	cat /tmp/bash.bashrc >> /etc/bash.bashrc && \
+	cat /tmp/bash.bashrc >> /root/.bashrc
 
 ENV HISTSIZE=100000
 

@@ -1,9 +1,14 @@
 FROM ubuntu:xenial
 
-ENV DKHOST=base HISTSIZE=100000 HOME=/root DEBIAN_FRONTEND=noninteractive
+ENV DKHOST=base HOME=/root DEBIAN_FRONTEND=noninteractive
 
-#--[ apt transport https locales ]
+#--[ update-dkhost, env-path-prepend, env-path-append ]
+COPY imgdata/bin/* /bin/
+
 RUN \
+#--[ DKHOST ]
+	env-set-dkhost base && \
+#--[ apt transport https locales ]
 	apt-get update && \
 	apt-get install -y apt-transport-https apt-utils && \
 	locale-gen en_US.UTF-8 && \
@@ -12,6 +17,9 @@ RUN \
 ENV LANGUAGE=en_US:en LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 RUN \
+	echo "LANGUAGE=en_US:en" >> /etc/environment && \
+        echo "LANG=en_US.UTF-8" >> /etc/environment && \
+        echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
 	locale-gen en_US.UTF-8 && dpkg-reconfigure locales && \
 #--[ basic utils ]
 	apt-get update && \
@@ -38,21 +46,20 @@ RUN \
 #====================================================================
 
 RUN \
+	echo 'PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h[$DKHOST]:\w# "' >> /etc/environment && \
+	echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h[$DKHOST]:\w# "' >> /tmp/bash.bashrc && \
 	echo 'if [ -f /etc/bash_completion ] && ! shopt -oq posix; then' >> /tmp/bash.bashrc && \
 	echo '    . /etc/bash_completion' >> /tmp/bash.bashrc && \
 	echo 'fi' >> /tmp/bash.bashrc && \
-	echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h[$DKHOST]:\w# "' >> /tmp/bash.bashrc && \
 	echo "alias mv='mv -i'" >> /tmp/bash.bashrc && \
 	echo "alias rm='rm -i'" >> /tmp/bash.bashrc && \
 	echo "alias cp='cp -i'" >> /tmp/bash.bashrc && \
-	echo 'export PATH=/nas/scripts/utils:$PATH' >> /tmp/bash.bashrc && \
 	cat /tmp/bash.bashrc >> /etc/bash.bashrc && \
-	cat /tmp/bash.bashrc >> /root/.bashrc
+	cat /tmp/bash.bashrc >> /root/.bashrc && \
+#--[ /entrypoint.d, /var/lib/docker-entrypoint folders ]
+	mkdir /entrypoint.d /var/lib/docker-entrypoint
 
 #--[ entrypoint & cmd ]
-
-RUN mkdir /entrypoint.d /var/lib/docker-entrypoint
-
 COPY imgdata/entrypoint.sh /
 COPY imgdata/entrypoint-base.sh /entrypoint.d/10-base.sh
 

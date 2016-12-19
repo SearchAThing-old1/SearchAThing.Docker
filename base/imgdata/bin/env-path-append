@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ "x$1" == "x" ]; then exit; fi
+
+sed -i "s#\(PATH=\"\)\(.*\)\(\"\)#\1\2:$1\3#" /etc/environment
+
+export PATH="$PATH:$1"

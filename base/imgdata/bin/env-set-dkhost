@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sed -i 's/\(DKHOST="\)\(.*\)\("\)/\1'$1'\3/g' /etc/environment
+

@@ -1,6 +1,9 @@
 #!/bin/bash
 
-source /nas/scripts/utils.sh
+executing_dir()
+{
+        dirname `readlink -f "$0"`
+}
 
 exdir=`executing_dir`
 container=`cat $exdir/imgdata/container`

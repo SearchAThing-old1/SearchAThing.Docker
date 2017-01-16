@@ -8,7 +8,7 @@ exdir=`executing_dir`
 PATH="$exdir"/../utils:$PATH
 source "$exdir"/../utils/utils.sh
 
-container=`cat imgdata/container`
+container=`cat "$exdir"/imgdata/container`
 
 dk-rm-if-exists $container
 

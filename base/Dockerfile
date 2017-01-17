@@ -41,7 +41,7 @@ RUN \
 #--[ supervisor ]
 	apt-get install -y supervisor && \
 #--[ ssh ]
-	apt-get install -y sshd
+	apt-get install -y openssh-server
 
 #====================================================================
 # bashrc

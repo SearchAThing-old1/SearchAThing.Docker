@@ -40,3 +40,6 @@ to enter the running container
 |---|---|
 | base | common base utilities |
 | mono | mono net framework runtimes and compiler |
+| develbase | basic development tools |
+| devel     | advanced development tools |
+| searchathing | searchathing libraries compile sample |

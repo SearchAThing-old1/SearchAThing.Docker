@@ -39,7 +39,9 @@ RUN \
 #--[ rsyslog ]
 	apt-get install -y rsyslog && \
 #--[ supervisor ]
-	apt-get install -y supervisor
+	apt-get install -y supervisor && \
+#--[ ssh ]
+	apt-get install -y sshd
 
 #====================================================================
 # bashrc

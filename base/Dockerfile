@@ -49,8 +49,9 @@ RUN \
 #====================================================================
 
 RUN \
-	echo 'PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h[$DKHOST]:\w# "' >> /etc/environment && \
-	echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h[$DKHOST]:\w# "' >> /tmp/bash.bashrc && \
+	echo "DKHOST=$DKHOST" >> /etc/environment && \
+	echo 'PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@[$DKHOST]:\w# "' >> /etc/environment && \
+	echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@[$DKHOST]:\w# "' >> /tmp/bash.bashrc && \
 	echo 'if [ -f /etc/bash_completion ] && ! shopt -oq posix; then' >> /tmp/bash.bashrc && \
 	echo '    . /etc/bash_completion' >> /tmp/bash.bashrc && \
 	echo 'fi' >> /tmp/bash.bashrc && \

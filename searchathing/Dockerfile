@@ -2,6 +2,9 @@ FROM searchathing/devel
 
 ENV DKHOST=searchathing PATH=/opt/nuget:$PATH
 
+RUN \
+	env-set-dkhost searchathing
+
 # see entrypoint
 
 #======================================================================

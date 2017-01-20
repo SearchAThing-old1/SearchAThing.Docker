@@ -7,6 +7,7 @@ COPY imgdata/bin/* /bin/
 
 RUN \
 #--[ DKHOST ]
+	echo "DKHOST=base" >> /etc/environment && \
 	env-set-dkhost base && \
 #--[ apt transport https locales ]
 	apt-get update && \

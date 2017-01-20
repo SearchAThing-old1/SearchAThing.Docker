@@ -1,11 +1,12 @@
 FROM searchathing/develbase
 
-ENV DKHOST=devel
+ENV DKHOST=devel PATH=/opt/nuget:$PATH
 
 RUN \
 #--[ dkhost ]
 	env-set-dkhost devel && \
 #--[ nuget ]
+	env-path-append /opt/nuget && \
         mkdir /opt/nuget && wget -O /opt/nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe && \
         echo 'mono /opt/nuget/nuget.exe "$@"' > /opt/nuget/nuget && chmod +x /opt/nuget/nuget && \
         mkdir -p /root/.config/NuGet

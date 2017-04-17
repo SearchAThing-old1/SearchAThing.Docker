@@ -24,6 +24,10 @@ RUN \
 	apt-get install -y postgresql-client && \
 	apt-get install -y postgresql-autodoc
 
+RUN \
+#--[ jq ]
+	apt-get install -y jq
+	
 COPY imgdata/postgresql_autodoc*.tmpl /usr/share/postgresql_autodoc
 
 #======================================================================

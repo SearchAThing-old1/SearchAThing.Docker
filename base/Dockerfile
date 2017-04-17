@@ -11,7 +11,7 @@ RUN \
 	env-set-dkhost base && \
 #--[ apt transport https locales ]
 	apt-get update && \
-	apt-get install -y apt-transport-https apt-utils && \
+	apt-get install -y apt-transport-https apt-utils locales && \
 	locale-gen en_US.UTF-8 && \
 	dpkg-reconfigure locales
 

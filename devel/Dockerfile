@@ -17,9 +17,7 @@ COPY imgdata/.config/NuGet/NuGet.Config /root/.config/NuGet
 RUN \
         echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list && \
         apt-get update && \
-        apt-get install referenceassemblies-pcl && \
-#--[ monodevelop ]
-        apt-get install -y monodevelop
+        apt-get install referenceassemblies-pcl
 
 
 #======================================================================

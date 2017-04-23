@@ -1,4 +1,4 @@
-FROM searchathing/mono
+FROM searchathing/base
 
 ENV DKHOST=develbase PATH=/opt/conda/bin:$PATH
 

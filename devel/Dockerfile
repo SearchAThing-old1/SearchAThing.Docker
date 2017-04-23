@@ -23,6 +23,13 @@ RUN \
 #--[ pcl assemblies ]
         apt-get install referenceassemblies-pcl
 
+COPY imgdata/mono.machine.config.patch /tmp/patch
+
+RUN \
+	#--[ mono db provider npgsql ]
+        cd /tmp; sed -i -e '/<add name="Sybase Data Provider"    invariant="Mono.Data.SybaseClient"/r patch' -e "s///" /etc/mono/4.5/machine.config && \
+        \rm -f /tmp/patch
+
 #======================================================================
 
 #--[ entrypoint & cmd ]

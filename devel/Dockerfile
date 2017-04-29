@@ -30,6 +30,20 @@ RUN \
         cd /tmp; sed -i -e '/<add name="Sybase Data Provider"    invariant="Mono.Data.SybaseClient"/r patch' -e "s///" /etc/mono/4.5/machine.config && \
         \rm -f /tmp/patch
 
+#--[ remove ioctl bashrc ]
+RUN \
+	sed -i 's#\(mesg n || true\)#\#\1#g' /root/.profile
+
+
+ENV NVM_DIR=/root/.nvm
+
+#--[ node version manager ]
+RUN \
+	/bin/bash -c "curl https://raw.githubusercontent.com/creationix/nvm/v0.25.0/install.sh | bash && source $NVM_DIR/nvm.sh && nvm install node"
+
+RUN \
+	echo "nvm use node" >> ~/.bashrc
+
 #======================================================================
 
 #--[ entrypoint & cmd ]

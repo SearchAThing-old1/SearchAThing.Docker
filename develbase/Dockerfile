@@ -1,5 +1,7 @@
 FROM searchathing/base
 
+RUN apt-get update
+
 ENV DKHOST=develbase PATH=/opt/conda/bin:$PATH
 
 RUN \
@@ -10,7 +12,6 @@ RUN \
 #--[ npm ]
 	apt-get install -y npm && \
 #--[ python anaconda ]
-	apt-get update --fix-missing && \
 	apt-get install -y wget bzip2 ca-certificates libglib2.0-0 libxext6 libsm6 libxrender1 git mercurial subversion && \
 	wget --quiet https://repo.continuum.io/archive/Anaconda2-4.1.1-Linux-x86_64.sh -O ~/anaconda.sh && \
 	/bin/bash ~/anaconda.sh -b -p /opt/conda && \
